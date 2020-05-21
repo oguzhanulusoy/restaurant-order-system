@@ -76,4 +76,8 @@ public class Restaurant {
         }
     }
 
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
 }
