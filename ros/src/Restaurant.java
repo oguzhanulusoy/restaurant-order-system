@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Restaurant {
 
-    private ArrayList<Order> orders;
+    public ArrayList<Order> orders;
     private ArrayList<Item> items;
 
     public Restaurant() {
@@ -14,7 +14,6 @@ public class Restaurant {
         orders = new ArrayList<Order>();
     }
 
-    /* Item operations here */
     public void addFood(String name, String receipt) {
         Food food = new Food(name, receipt);
         items.add(food);
@@ -25,29 +24,33 @@ public class Restaurant {
         items.add(drink);
     }
 
-    /* Order operations here */
-    public void order(Item item, String table) {
-        try {
-            for (Item iteration : items) {
-                if (iteration.getName().equals(item.getName())) {
-                    Order order = new Order(table);
-                    order.addItem(item);
-                    orders.add(order);
-                }
+    public Item findItem(String name) {
+        for(Item item : items) {
+            if (item.getName().equals(name)) {
+                return item;
             }
+        }
+        return null;
+    }
+
+    public void makeOrder(Item item, String table) {
+        try {
+            Order order = new Order(table);
+            order.addItem(item);
+            orders.add(order);
         }
         catch (Exception ex) {
             System.out.println();
         }
     }
 
-    public void complete() {
+    public void completeOrder() {
         for (Order order : orders) {
             order.complete();
         }
     }
 
-    public void cancel(Order order, Item item) {
+    public void cancelOrder(Order order, Item item) {
         for (Order index: orders) {
             if (index.equals(order)) {
                 index.cancelItem(item);
@@ -55,7 +58,7 @@ public class Restaurant {
         }
     }
 
-    public void bill() {
+    public void getBill() {
         double total = 0;
         for (Order order : orders) {
             total += order.getTotalPrice();
@@ -79,5 +82,7 @@ public class Restaurant {
     public ArrayList<Item> getItems() {
         return items;
     }
+
+
 
 }

@@ -10,7 +10,8 @@ public class Main {
     public enum MenuOptions {
         ADD_FOOD,
         ADD_DRINK,
-        ORDER
+        GET_ITEMS,
+        MAKE_ORDER
     }
 
     public static void run() {
@@ -38,28 +39,27 @@ public class Main {
             restaurant.addDrink(name, type);
         }
 
-        if (input.equals(MenuOptions.ORDER.toString())) {
-
-            System.out.print("Please enter table: ");
-            String table = input.next();
-
-            ArrayList<Item> items = restaurant.getItems();
-            Item orderedItem;
-
-            for (Item item : items) {
-                System.out.print("\t\t" + item.getName());
-                System.out.println("Choose");
-                String choice = input.next();
-                if(choice != "") {
-                    orderedItem = item;
-                    restaurant.order(item, table);
-                }
+        if (input.equals(MenuOptions.GET_ITEMS.toString())) {
+            for(Item item : restaurant.getItems()){
+                System.out.println(item.getName());
             }
+
         }
 
+        if (input.equals(MenuOptions.MAKE_ORDER.toString())) {
+            System.out.println("Please enter table: ");
+            String table = input.next();
 
+            Order order = new Order(table);
+            restaurant.orders.add(order);
 
+            System.out.println("Enter your item: ");
+            String item = input.next();
 
+            order.addItem(restaurant.findItem(item));
+        }
+
+        // TODO: Implement your user-friendly console app
     }
 
     public static void main(String[] args) {
